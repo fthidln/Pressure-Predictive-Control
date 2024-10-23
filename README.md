@@ -128,9 +128,11 @@ In this step, the algorithm used for model developments are K-Nearest Neighbour,
 
 # Model Evaluation
 The matrix evaluation used for this step is Mean Squared Error
-\begin{align*}
-$$text{MSE}(y, \hat{y}) = \frac{\sum_{i=0}^{N - 1} (y_i - x_i)^2}{N}$$
-\end{align*}
+$$
+\begin{align}
+  \text{MSE}(y, \hat{y}) = \frac{\sum_{i=0}^{N - 1} (y_i - x_i)^2}{N}
+\end{align}
+$$
 
 Where:
 
