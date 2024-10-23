@@ -127,7 +127,7 @@ In this step, the algorithm used for model developments are K-Nearest Neighbour,
    * Difficult to interpret compared to simpler models like linear regression
 
 # Model Evaluation
-The matrix evaluation used for this step is Mean Squared Error<br>
+The matrix evaluation used for this step is Mean Squared Error<br><br>
 $$MSE(y, x) = \frac{\sum_{i=0}^{N - 1} (y_i - x_i)^2}{N}$$
 <br>
 
