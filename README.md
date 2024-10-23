@@ -141,7 +141,7 @@ Where:
 MSE is a metric used to measure the average squared difference between the predicted values and the actual values in the dataset. It is calculated by taking the average of the squared residuals, where the residual is the difference between predicted value and the actual value for each data point [[ 6 ]](https://www.geeksforgeeks.org/mean-squared-error/). A lower MSE indicates that the model's predictions are closer to the actual values signifying better accuracy. While, a higher MSE suggests that the model's predictions deviate further from true values indicating the poorer performance.
 
 ### Performance of Each Machine Learning Algorithm
-![Perfomance of Each Algorithm](Assets/HistPerform.png "Perfomance of Each Algorithm")
+![HistPerform](Assets/HistPerform.png "HistPerform")
 
 |index|train|test|
 |---|---|---|
