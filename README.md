@@ -68,6 +68,7 @@ The dataset that used in this project is Smart Pressure Control Prediction, whic
 
 # Exploratory Data Analysis (EDA)
 ## Statistical Properties
+
 |index|DEGC1PV|DEGC2PV|DEGC3PV|DEGC4PV|DEGC5PV|DEGC6PV|DEGC1SV|DEGC2SV|DEGC3SV|DEGC4SV|DEGC5SV|DEGC6SV|NM3/H\.1PV|NM3/H\.2PV|NM3/H\.3PV|NM3/H\.4PV|NM3/H\.5PV|NM3/H\.6PV|NM3/H\.1SV|NM3/H\.2SV|
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 |count|3840\.0|3840\.0|3840\.0|3840\.0|3840\.0|3840\.0|3840\.0|3840\.0|3840\.0|3840\.0|3840\.0|3840\.0|3840\.0|3840\.0|3840\.0|3840\.0|3840\.0|3840\.0|3840\.0|3840\.0|
@@ -78,3 +79,100 @@ The dataset that used in this project is Smart Pressure Control Prediction, whic
 |50%|995\.9|1029\.7|1215\.2|1188\.2|1142\.6|1136\.4|1005\.0|1070\.0|1215\.0|1200\.0|1140\.0|1180\.0|2447\.5|2882\.0|2982\.5|6931\.5|1897\.0|5017\.5|2495\.0|2897\.0|
 |75%|1026\.8|1058\.4|1226\.725|1203\.7|1160\.4|1162\.725|1005\.0|1070\.0|1220\.0|1210\.0|1150\.0|1245\.0|2998\.5|3470\.0|4058\.0|11146\.75|2245\.25|6170\.5|2981\.5|3450\.5|
 |max|1156\.0|1164\.9|1314\.6|1260\.4|1264\.7|1287\.4|1050\.2|1070\.0|1265\.0|1240\.0|1260\.0|1245\.0|12590\.0|15302\.0|12955\.0|15630\.0|6536\.0|9406\.0|12114\.0|14855\.0|
+
+## Multivariate Analysis
+### Correlation Matrix
+![Correlation Matrix](Assets/CorrMat.png "Correlation Matrix")
+
+### Important Key Points from EDA
+*   All DEGC2SV variable values are stagnant at 1070, so they have no impact on the target
+*   Each variable has quite a lot of outlier values, but it is still retained because it can represent noise in real time
+*   From correlation matrix above, we can conclude that NM3/H.1PV, NM3/H.2PV, NM3/H.1SV, and NM3/H.2SV is the most influencial variables to source input pressure, so we can drop the other unnacessary variables
+
+## Principal Component Analysis
+This step is important, Principal Component Analysis (PCA) helps to eliminate redundancy by transforming the original features into a smaller set of uncorrelated variables (principal components), making the data easier to analyze by the model. Turns out that the most influencial principal component variance is 0.978, followed by 0.012 and 0.009. We can ignore the last two dimension because it has a very small variance corresponding to the first one [[ 3 ]](https://www.sciencedirect.com/science/article/pii/S1877050919321507). Thus simplify the problem that the models try to solve [[ 4 ]](https://royalsocietypublishing.org/doi/10.1098/rsta.2015.0202). 
+
+# Spliting Dataset into Train and Test Set
+To initiate the model development, splitting the data into train and test set is necessary. Moreover, this project using supervised learning. The train set serve as learning agent while test set serve as evaluating agent.
+
+## Standardization
+In order to scaling the dataset value, we can use standardization method. It transform the dataset in such a way to have a mean of 0 and standard deviation of 1. Moreover, standardization method is the superior scaling technique for medium and large dataset [[ 5 ]](https://ieeexplore.ieee.org/document/10681438).
+
+# Model Development
+In this step, the algorithm used for model developments are K-Nearest Neighbour, Linear Regression, and Dense Neural Network.
+
+* K-Nearest Neighbour = KNN is a simple, instance-based learning algorithm. It classifies a new data point based on the majority class of its K-nearest neighbors in the feature space.
+ * Pros
+   * Simple to understand and implement
+   * No explicit training phase (lazy learning)
+ * Cons
+   * Computationally expensive for large datasets (due to distance calculations)
+   * Sensitive to irrelevant or unscaled features
+   * Performance depends on the choice of K and distance metric
+* Linear Regression = Linear regression models the relationship between a dependent variable (target) and one or more independent variables (features) by fitting a linear equation to the data.
+ * Pros
+   * Simple, interpretable model
+   * Works well when there is a linear relationship between features and the target
+ * Cons
+   * Limited to linear relationships
+   * Sensitive to outliers
+   * Assumes no multicollinearity between features (when using multiple features)
+* Dense Neural Network = A dense neural network (DNN) consists of layers of neurons where each neuron in one layer is connected to every neuron in the next layer (hence the term "fully connected").
+ * Pros
+   * Can model highly complex relationships between input and output
+   * Scalable to large datasets and tasks like image recognition, natural language processing, etc
+ * Cons
+   * Requires a large amount of data and computational resources to train effectively
+   * Prone to overfitting, especially with small datasets
+   * Difficult to interpret compared to simpler models like linear regression
+
+# Model Evaluation
+The matrix evaluation used for this step is Mean Squared Error
+\begin{align*}
+\text{MSE}(y, \hat{y}) = \frac{\sum_{i=0}^{N - 1} (y_i - x_i)^2}{N}
+\end{align*}
+
+Where:
+
+* N = Amount of the data
+* i = Index of the data
+* y = Actual value
+* x = Predicted value
+
+MSE is a metric used to measure the average squared difference between the predicted values and the actual values in the dataset. It is calculated by taking the average of the squared residuals, where the residual is the difference between predicted value and the actual value for each data point [[ 6 ]](https://www.geeksforgeeks.org/mean-squared-error/). A lower MSE indicates that the model's predictions are closer to the actual values signifying better accuracy. While, a higher MSE suggests that the model's predictions deviate further from true values indicating the poorer performance.
+
+### Performance of Each Machine Learning Algorithm
+![Perfomance of Each Algorithm](Assets/HistPerform.png "Perfomance of Each Algorithm")
+
+|index|train|test|
+|---|---|---|
+|KNN|1731\.4725651041665|4193\.04046875|
+|Linear Regression|5030\.204432958909|5404\.623603896129|
+|ANN|2773\.7929275104184|4416\.747012630459|
+
+From metric evaluation table above, we can conclude that K-Nearest Neighbour algorithm is the most desired algortihm because has the lowest MSE value in train and test set, followed by Dense Neural Network, and the last is Linear Regression.
+
+## Model Prediction
+This step is carried out to see how each machine learning algorithm predicting the target data (source pressure).
+
+|index|y\_true|dimension|LR|KNN|ANN|
+|---|---|---|---|---|---|
+|770|601|0\.25246995242719095|580\.21152119611|590\.6|577\.8556518554688|
+
+![Prediction Scatter](Assets/RealPredScatter.png "Prediction Scatter")
+
+From the figure above, we can compare how prediction data and real data from each machine learning algorithm (K-Nearest Neighbour, Linear Regression, Dense Neural Network). Clearly, Linear Regression generated data point in a straight line. K-Nearest Neighbour generated data points that gather in one area. Then Dense Neural Network seems to struggle with its predictions forming a smoother but lower curve that doesn't capture the wide spread of real data.
+
+# Reference
+
+*   [ 1 ] J. Conradt, “A comparison between a traditional PID controller and an Artificial Neural Network controller in manipulating a robotic arm,” 2019. Accessed: Oct. 22, 2024. [Online]. Available: https://www.semanticscholar.org/paper/A-comparison-between-a-traditional-PID-controller-a-Conradt/efb1c57c0dbc3b88cd35085f677869104fce5474
+
+*   [ 2 ] “Smart Pressure Control Prediction.” Accessed: Oct. 23, 2024. [Online]. Available: https://www.kaggle.com/datasets/guanlintao/smart-pressure-control-prediction
+
+*   [ 3 ] N. Salem and S. Hussein, “Data dimensional reduction and principal components analysis,” Procedia Computer Science, vol. 163, pp. 292–299, Jan. 2019, doi: 10.1016/j.procs.2019.12.111.
+
+*   [ 4 ] I. T. Jolliffe and J. Cadima, “Principal component analysis: a review and recent developments,” Philosophical Transactions of the Royal Society A: Mathematical, Physical and Engineering Sciences, vol. 374, no. 2065, p. 20150202, Apr. 2016, doi: 10.1098/rsta.2015.0202.
+
+*   [ 5 ] K. Mahmud Sujon, R. Binti Hassan, Z. Tusnia Towshi, M. A. Othman, M. Abdus Samad, and K. Choi, “When to Use Standardization and Normalization: Empirical Evidence From Machine Learning Models and XAI,” IEEE Access, vol. 12, pp. 135300–135314, 2024, doi: 10.1109/ACCESS.2024.3462434.
+
+*   [ 6 ] “Mean Squared Error | Definition, Formula, Interpretation and Examples,” GeeksforGeeks. Accessed: Oct. 23, 2024. [Online]. Available: https://www.geeksforgeeks.org/mean-squared-error/
