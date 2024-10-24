@@ -103,9 +103,9 @@ To initiate the model development, splitting the data into train and test set is
 In order to scaling the dataset value, we can use standardization method. It transform the dataset in such a way to have a mean of 0 and standard deviation of 1. Moreover, standardization method is the superior scaling technique for medium and large dataset [[ 5 ]](https://ieeexplore.ieee.org/document/10681438).
 
 ## Model Development
-In this step, the algorithm used for model developments are K-Nearest Neighbour, Linear Regression, and Dense Neural Network.
+To conduct model development, we have to divide variables in dataset into independent variable (y) and dependent variables (x). This project target variable (independent variable) is source input pressure (mmH2O) and dependent variables air flowrate also desired air flowrate in zone 1 and 2 (NM3/H.1PV, NM3/H.2PV, NM3/H.1SV, NM3/H.2SV). After that, fit the independent and dependent variable into each machine lerning algorithm and set several hyperparameter (if applicable). In this step, the algorithm used for model developments are K-Nearest Neighbour, Linear Regression, and Dense Neural Network.
 
-* K-Nearest Neighbour = KNN is a simple, instance-based learning algorithm. It classifies a new data point based on the majority class of its K-nearest neighbors in the feature space.
+* K-Nearest Neighbour = KNN is a simple, instance-based learning algorithm. It predict the target value for a new data point by averaging the target values of the K-nearest neighbors. 
  * Pros
    * Simple to understand and implement
    * No explicit training phase (lazy learning)
