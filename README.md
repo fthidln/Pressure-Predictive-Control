@@ -131,8 +131,8 @@ To conduct model development, we have to divide variables in dataset into indepe
    * Prone to overfitting, especially with small datasets
    * Difficult to interpret compared to simpler models like linear regression
 
-## Model Evaluation
-The matrix evaluation used for this step is Mean Squared Error<br><br>
+## Evaluation
+The metrics evaluation used for this step is Mean Squared Error<br><br>
 $$MSE(y, x) = \frac{\sum_{i=0}^{N - 1} (y_i - x_i)^2}{N}$$
 <br>
 
