@@ -4,32 +4,31 @@ By    : Muhammad Fatih Idlan (faiti.alfaqar@gmail.com)
 
 This project was done to fulfil the *Machine Learning Terapan* 1st assignment submission on Dicoding. The domain used in this project is manufacturing control process, especially pressure control.
 
-# Project Domain
+## Project Domain
 Pressure control is a fundamental aspect of many industrial processes, particularly in chemical engineering, where maintaining optimal pressure levels can significantly enhance efficiency, safety, and product quality. However, real-time fluctuations due to varying input conditions, system disturbances, and equipment aging pose challenges to traditional control methods. Traditional pressure control methods rely on Proportional-Integral-Derivative (PID) controllers, which require manual tuning and often struggle with dynamic system behaviors or process disturbances. Moreover, increasing feedback noise making PID performs poorly comparing to neural network model [[ 1 ]](https://www.semanticscholar.org/paper/A-comparison-between-a-traditional-PID-controller-a-Conradt/efb1c57c0dbc3b88cd35085f677869104fce5474). The existence of feedback noise is inevitably present in real world setting. Thus making machine learning based model is more flexible in real-time fluctuations.
 
-# Background
-# Business Understanding
-## Problem Statement
+## Business Understanding
+### Problem Statement
 Starting with explanation from the background above, core problems that this project aims to solve are:
 
 * What are the variables that hugely affect target i.e. source pressure for developing predictive models that dynamically adjust it?
 * How are the variables those hugely affect the source pressure is related?
 * How the performance of each model to predict the source pressure that has been build?
 
-## Objectives
+### Objectives
 According to problem statement above, this project has several objectives too, that are:
 
 * Knowing the most influencial variables toward source pressure in the system
 * Learn the relation between influencial variables to source pressure
 * Determining high performance models
 
-## Solution
+### Solution
 To achive the objectives, we need to perform several things such as:
 
 * Implementing correlation heatmap for each variables to identify influencial variables
 * Using Linear Regression, K-Nearest Neighbour, and Dense Neural Network to selecting high performance corresponding to evaluation metrics (MSE)
 
-# Data Understanding
+## Data Understanding
 ![Data Understanding](/Assets/Kaggle.png "Data Understanding")
 The dataset that used in this project is Smart Pressure Control Prediction, which can be accessed through kaggle [[ 2 ]](https://www.kaggle.com/datasets/guanlintao/smart-pressure-control-prediction). This dataset consist of 2 csv files, train and test, which in total has 4320 rows with 32 column. This dataset has no missing value, but have 480 duplicated data. The explanation for each column can be seen below:
 
@@ -66,10 +65,10 @@ The dataset that used in this project is Smart Pressure Control Prediction, whic
 *   FC6 = Control valve opening degree in zone 6
 *   mmH2O = Source input pressure
 
-## Exploratory Data Analysis (EDA)
+### Exploratory Data Analysis (EDA)
 Conducting exploratory data analysis, including statistical properties review with describe method and building correlation matrix for each variables to identify what variables are strongly related to the target variable.
 
-### Statistical Properties
+#### Statistical Properties
 
 |index|DEGC1PV|DEGC2PV|DEGC3PV|DEGC4PV|DEGC5PV|DEGC6PV|DEGC1SV|DEGC2SV|DEGC3SV|DEGC4SV|DEGC5SV|DEGC6SV|NM3/H\.1PV|NM3/H\.2PV|NM3/H\.3PV|NM3/H\.4PV|NM3/H\.5PV|NM3/H\.6PV|NM3/H\.1SV|NM3/H\.2SV|
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -82,7 +81,7 @@ Conducting exploratory data analysis, including statistical properties review wi
 |75%|1026\.8|1058\.4|1226\.725|1203\.7|1160\.4|1162\.725|1005\.0|1070\.0|1220\.0|1210\.0|1150\.0|1245\.0|2998\.5|3470\.0|4058\.0|11146\.75|2245\.25|6170\.5|2981\.5|3450\.5|
 |max|1156\.0|1164\.9|1314\.6|1260\.4|1264\.7|1287\.4|1050\.2|1070\.0|1265\.0|1240\.0|1260\.0|1245\.0|12590\.0|15302\.0|12955\.0|15630\.0|6536\.0|9406\.0|12114\.0|14855\.0|
 
-### Multivariate Analysis
+#### Multivariate Analysis
 #### Correlation Matrix
 ![Correlation Matrix](Assets/CorrMat.png "Correlation Matrix")
 
@@ -91,19 +90,19 @@ Conducting exploratory data analysis, including statistical properties review wi
 *   Each variable has quite a lot of outlier values, but it is still retained because it can represent noise in real time
 *   From correlation matrix above, we can conclude that NM3/H.1PV, NM3/H.2PV, NM3/H.1SV, and NM3/H.2SV is the most influencial variables to source input pressure, so we can drop the other unnacessary variables
 
-# Data Preparation
+## Data Preparation
 Before model development step, it is inevitable to skip data preparation. This section is important, preparing data so the data that enter model development stage is not generating a trash model. It is start with data cleaning which removing duplicated data using pandas data frame method, drop_duplicates(). Later, principal component analysis is conducted to simplify dimension which removing redundance information. To fit the data into machine learning algorithm, splitting data into train and test set is necessary. This project use train_test_split from sklearn model selection using 37 as the random state, so  each time the code is run, it does not generate different splitting. The last thing to do is value standardization of principal component to perform efficiently by ensuring that different variables are treated on a common scale, since this project use an algorithm that rely in distance metrics (K-Nearest Neighbour). 
 
-## Principal Component Analysis
+### Principal Component Analysis
 This step is important, Principal Component Analysis (PCA) helps to eliminate redundancy by transforming the original features into a smaller set of uncorrelated variables (principal components), making the data easier to analyze by the model. Turns out that the most influencial principal component variance is 0.978, followed by 0.012 and 0.009. We can ignore the last two dimension because it has a very small variance corresponding to the first one [[ 3 ]](https://www.sciencedirect.com/science/article/pii/S1877050919321507). Thus simplify the problem that the models try to solve [[ 4 ]](https://royalsocietypublishing.org/doi/10.1098/rsta.2015.0202). 
 
-## Spliting Dataset into Train and Test Set
+### Spliting Dataset into Train and Test Set
 To initiate the model development, splitting the data into train and test set is necessary. Moreover, this project using supervised learning. The train set serve as learning agent while test set serve as evaluating agent.
 
 ### Standardization
 In order to scaling the dataset value, we can use standardization method. It transform the dataset in such a way to have a mean of 0 and standard deviation of 1. Moreover, standardization method is the superior scaling technique for medium and large dataset [[ 5 ]](https://ieeexplore.ieee.org/document/10681438).
 
-# Model Development
+## Model Development
 In this step, the algorithm used for model developments are K-Nearest Neighbour, Linear Regression, and Dense Neural Network.
 
 * K-Nearest Neighbour = KNN is a simple, instance-based learning algorithm. It classifies a new data point based on the majority class of its K-nearest neighbors in the feature space.
@@ -131,7 +130,7 @@ In this step, the algorithm used for model developments are K-Nearest Neighbour,
    * Prone to overfitting, especially with small datasets
    * Difficult to interpret compared to simpler models like linear regression
 
-# Model Evaluation
+## Model Evaluation
 The matrix evaluation used for this step is Mean Squared Error<br><br>
 $$MSE(y, x) = \frac{\sum_{i=0}^{N - 1} (y_i - x_i)^2}{N}$$
 <br>
@@ -156,7 +155,7 @@ MSE is a metric used to measure the average squared difference between the predi
 
 From metric evaluation table above, we can conclude that K-Nearest Neighbour algorithm is the most desired algortihm because has the lowest MSE value in train and test set, followed by Dense Neural Network, and the last is Linear Regression.
 
-## Model Prediction
+### Model Prediction
 This step is carried out to see how each machine learning algorithm predicting the target data (source pressure).
 
 |index|y\_true|dimension|LR|KNN|ANN|
@@ -167,7 +166,7 @@ This step is carried out to see how each machine learning algorithm predicting t
 
 From the figure above, we can compare how prediction data and real data from each machine learning algorithm (K-Nearest Neighbour, Linear Regression, Dense Neural Network). Clearly, Linear Regression generated data point in a straight line. K-Nearest Neighbour generated data points that gather in one area. Then Dense Neural Network seems to struggle with its predictions forming a smoother but lower curve that doesn't capture the wide spread of real data.
 
-# Reference
+## Reference
 
 *   [ 1 ] J. Conradt, “A comparison between a traditional PID controller and an Artificial Neural Network controller in manipulating a robotic arm,” 2019. Accessed: Oct. 22, 2024. [Online]. Available: https://www.semanticscholar.org/paper/A-comparison-between-a-traditional-PID-controller-a-Conradt/efb1c57c0dbc3b88cd35085f677869104fce5474
 
