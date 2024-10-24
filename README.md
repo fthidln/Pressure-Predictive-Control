@@ -105,7 +105,7 @@ In order to scaling the dataset value, we can use standardization method. It tra
 ## Model Development
 To conduct model development, we have to divide variables in dataset into independent variable (y) and dependent variables (x). This project target variable (independent variable) is source input pressure (mmH2O) and dependent variables air flowrate also desired air flowrate in zone 1 and 2 (NM3/H.1PV, NM3/H.2PV, NM3/H.1SV, NM3/H.2SV). After that, fit the independent and dependent variable into each machine lerning algorithm and set several hyperparameter (if applicable). In this step, the algorithm used for model developments are K-Nearest Neighbour, Linear Regression, and Dense Neural Network.
 
-* K-Nearest Neighbour = KNN is a simple, instance-based learning algorithm. It predict the target value for a new data point by averaging the target values of the K-nearest neighbors. 
+* K-Nearest Neighbour = KNN is a simple, instance-based learning algorithm. It predict the target value for a new data point by averaging the target values of the K-nearest neighbors. To build machine learning model using K-Nearest Neighbour for this project, we need to decide the hyperparameter first. For K-Nearest Neighbour, the hyperparameters that will be set is the value of K which is 5 and brute algorithm employed to building model. While the rest of the hyperparameters are left by default.
  * Pros
    * Simple to understand and implement
    * No explicit training phase (lazy learning)
@@ -113,7 +113,7 @@ To conduct model development, we have to divide variables in dataset into indepe
    * Computationally expensive for large datasets (due to distance calculations)
    * Sensitive to irrelevant or unscaled features
    * Performance depends on the choice of K and distance metric
-* Linear Regression = Linear regression models the relationship between a dependent variable (target) and one or more independent variables (features) by fitting a linear equation to the data.
+* Linear Regression = Linear regression models the relationship between a dependent variable (target) and one or more independent variables (features) by fitting a linear equation to the data. This machine learning algorithm is the simplest model among other model used in the project. It requires no hyperparameters to set, because it is just fitting the data points into linear straight line.
  * Pros
    * Simple, interpretable model
    * Works well when there is a linear relationship between features and the target
@@ -121,7 +121,8 @@ To conduct model development, we have to divide variables in dataset into indepe
    * Limited to linear relationships
    * Sensitive to outliers
    * Assumes no multicollinearity between features (when using multiple features)
-* Dense Neural Network = A dense neural network (DNN) consists of layers of neurons where each neuron in one layer is connected to every neuron in the next layer (hence the term "fully connected").
+* Dense Neural Network = A dense neural network (DNN) consists of layers of neurons where each neuron in one layer is connected to every neuron in the next layer (hence the term "fully connected"). Compare to other machine learning algorithm used in the project, this algorithm is the most complex. It is build using Sequential() model from tensorflow with 9 consecutive dense layer. The notation architecture for this model can be seen below:
+
  * Pros
    * Can model highly complex relationships between input and output
    * Scalable to large datasets and tasks like image recognition, natural language processing, etc
