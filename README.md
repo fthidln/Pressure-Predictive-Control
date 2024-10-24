@@ -122,7 +122,7 @@ To conduct model development, we have to divide variables in dataset into indepe
    * Sensitive to outliers
    * Assumes no multicollinearity between features (when using multiple features)
 * Dense Neural Network = A dense neural network (DNN) consists of layers of neurons where each neuron in one layer is connected to every neuron in the next layer (hence the term "fully connected"). Compare to other machine learning algorithm used in the project, this algorithm is the most complex. It is build using Sequential() model from tensorflow with 9 consecutive dense layer. The notation architecture for this model can be seen below:
-
+![DNN_Figure](Assets\DNN_Figure.png "DNN_Figure")
  * Pros
    * Can model highly complex relationships between input and output
    * Scalable to large datasets and tasks like image recognition, natural language processing, etc
