@@ -2,12 +2,12 @@
 
 By    : Muhammad Fatih Idlan (faiti.alfaqar@gmail.com)
 
-# Project Domain
 This project was done to fulfil the *Machine Learning Terapan* 1st assignment submission on Dicoding. The domain used in this project is manufacturing control process, especially pressure control.
 
-# Background
+# Project Domain
 Pressure control is a fundamental aspect of many industrial processes, particularly in chemical engineering, where maintaining optimal pressure levels can significantly enhance efficiency, safety, and product quality. However, real-time fluctuations due to varying input conditions, system disturbances, and equipment aging pose challenges to traditional control methods. Traditional pressure control methods rely on Proportional-Integral-Derivative (PID) controllers, which require manual tuning and often struggle with dynamic system behaviors or process disturbances. Moreover, increasing feedback noise making PID performs poorly comparing to neural network model [[ 1 ]](https://www.semanticscholar.org/paper/A-comparison-between-a-traditional-PID-controller-a-Conradt/efb1c57c0dbc3b88cd35085f677869104fce5474). The existence of feedback noise is inevitably present in real world setting. Thus making machine learning based model is more flexible in real-time fluctuations.
 
+# Background
 # Business Understanding
 ## Problem Statement
 Starting with explanation from the background above, core problems that this project aims to solve are:
@@ -66,8 +66,10 @@ The dataset that used in this project is Smart Pressure Control Prediction, whic
 *   FC6 = Control valve opening degree in zone 6
 *   mmH2O = Source input pressure
 
-# Exploratory Data Analysis (EDA)
-## Statistical Properties
+# Data Preparation
+
+## Exploratory Data Analysis (EDA)
+### Statistical Properties
 
 |index|DEGC1PV|DEGC2PV|DEGC3PV|DEGC4PV|DEGC5PV|DEGC6PV|DEGC1SV|DEGC2SV|DEGC3SV|DEGC4SV|DEGC5SV|DEGC6SV|NM3/H\.1PV|NM3/H\.2PV|NM3/H\.3PV|NM3/H\.4PV|NM3/H\.5PV|NM3/H\.6PV|NM3/H\.1SV|NM3/H\.2SV|
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -80,22 +82,22 @@ The dataset that used in this project is Smart Pressure Control Prediction, whic
 |75%|1026\.8|1058\.4|1226\.725|1203\.7|1160\.4|1162\.725|1005\.0|1070\.0|1220\.0|1210\.0|1150\.0|1245\.0|2998\.5|3470\.0|4058\.0|11146\.75|2245\.25|6170\.5|2981\.5|3450\.5|
 |max|1156\.0|1164\.9|1314\.6|1260\.4|1264\.7|1287\.4|1050\.2|1070\.0|1265\.0|1240\.0|1260\.0|1245\.0|12590\.0|15302\.0|12955\.0|15630\.0|6536\.0|9406\.0|12114\.0|14855\.0|
 
-## Multivariate Analysis
-### Correlation Matrix
+### Multivariate Analysis
+#### Correlation Matrix
 ![Correlation Matrix](Assets/CorrMat.png "Correlation Matrix")
 
-### Important Key Points from EDA
+#### Important Key Points from EDA
 *   All DEGC2SV variable values are stagnant at 1070, so they have no impact on the target
 *   Each variable has quite a lot of outlier values, but it is still retained because it can represent noise in real time
 *   From correlation matrix above, we can conclude that NM3/H.1PV, NM3/H.2PV, NM3/H.1SV, and NM3/H.2SV is the most influencial variables to source input pressure, so we can drop the other unnacessary variables
 
-## Principal Component Analysis
+### Principal Component Analysis
 This step is important, Principal Component Analysis (PCA) helps to eliminate redundancy by transforming the original features into a smaller set of uncorrelated variables (principal components), making the data easier to analyze by the model. Turns out that the most influencial principal component variance is 0.978, followed by 0.012 and 0.009. We can ignore the last two dimension because it has a very small variance corresponding to the first one [[ 3 ]](https://www.sciencedirect.com/science/article/pii/S1877050919321507). Thus simplify the problem that the models try to solve [[ 4 ]](https://royalsocietypublishing.org/doi/10.1098/rsta.2015.0202). 
 
-# Spliting Dataset into Train and Test Set
+## Spliting Dataset into Train and Test Set
 To initiate the model development, splitting the data into train and test set is necessary. Moreover, this project using supervised learning. The train set serve as learning agent while test set serve as evaluating agent.
 
-## Standardization
+### Standardization
 In order to scaling the dataset value, we can use standardization method. It transform the dataset in such a way to have a mean of 0 and standard deviation of 1. Moreover, standardization method is the superior scaling technique for medium and large dataset [[ 5 ]](https://ieeexplore.ieee.org/document/10681438).
 
 # Model Development
